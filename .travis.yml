@@ -1,0 +1,65 @@
+language: php
+php:
+  - '5.4'
+  - '5.5'
+  - '5.6'
+  - '7.0'
+  - '7.1'
+  - hhvm
+  - nightly
+
+.script: &build_script
+  - cp config/ca.cnf.default config/ca.cnf
+  - cp config/intermediate.cnf.default config/intermediate.cnf
+  - cp config/encrypt.yml.default config/encrypt.yml
+  - cp README.md README.txt
+
+.test_template: &test_template
+  stage: test
+  tags:
+    - gitlabcafe
+  script:
+    - composer require cakephp/cakephp-codesniffer:dev-master
+    - chmod +x vendor/bin/phpcs
+    - vendor/bin/phpcs -p --extensions=php --standard=vendor/cakephp/cakephp-codesniffer/CakePHP ./src ./tests ./config
+
+.test_template_ca: &test_template_ca
+  stage: test
+  tags:
+    - gitlabcafe
+  script: *build_script
+  after_script:
+    - php index.php bf:ca TestCA --CN="TEST CA" --C=SK --O="TEST ltd."
+    - php index.php bf:intermediatesign TestCA --CN="TEST Intermediate CA" --C=SK --O="TEST ltd." --CA=TestCA
+    - php index.php bf:usersign user --CN="Jane Doe" --C=SK --E=jane@doe.local --CA=TestCA
+    - php index.php bf:serversign server --CN="www.domain.tld" --C=SK --CA=TestCA
+    - cp config/certificates.json.default config/test_certificates.json
+    - php index-ee.php bf:sign:multiple test_certificates --CA=TestCA
+    - phpunit --coverage-text
+
+.production_template: &production_deploy
+  stage: production
+  tags:
+    - gitlabcafe
+  script:
+    - git push github master
+  only:
+    - master
+  when: manual
+
+test_master 1 2:
+  <<: *test_template
+  only:
+    - master
+
+test_master 2 2:
+  <<: *test_template_ca
+  only:
+    - master
+
+test_branches 1 1:
+  <<: *test_template
+  only:
+    - branches
+  except:
+    - master
