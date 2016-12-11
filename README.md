@@ -1,12 +1,14 @@
 # PHP Encrypt
 
+[![Build Status](https://travis-ci.org/jdmaymeow/php-encrypt.svg?branch=master)](https://travis-ci.org/jdmaymeow/php-encrypt)
+
 Certification authority management script
 
 ## Installation
 
 ### Prerequisities
 
-* PHP with openssl extension (tested with version 5.6.13 and 7.0.3)
+* PHP with openssl extension (PHP 5.5 and higher)
 * PHP mb-string extension
 * Composer to install
 
