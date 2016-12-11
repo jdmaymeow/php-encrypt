@@ -1,0 +1,24 @@
+{
+  "certificates": [
+    {
+      "internalName": "jane-doe",
+      "countryName": "SK",
+      "stateOrProvinceName": "Vychod",
+      "localityName": "Kosice",
+      "organizationName": "Test LTD.",
+      "organizationalUnitName": "Test User",
+      "commonName": "Jane Doe",
+      "emailAddress": "jane@doe.sk"
+    },
+    {
+      "internalName": "john-doe",
+      "countryName": "SK",
+      "stateOrProvinceName": "Zapad",
+      "localityName": "Bratislava",
+      "organizationName": "Test LTD.",
+      "organizationalUnitName": "Test user",
+      "commonName": "John Doe",
+      "emailAddress": "John@doe.local"
+    }
+  ]
+}

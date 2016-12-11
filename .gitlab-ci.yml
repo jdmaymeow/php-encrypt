@@ -1,0 +1,144 @@
+image: gitlabcafe/php:7
+
+before_script:
+  - composer self-update
+  - composer install
+
+stages:
+  - test
+  - build
+  - production
+  - deploy
+
+.script: &build_script
+  - cp config/ca.cnf.default config/ca.cnf
+  - cp config/intermediate.cnf.default config/intermediate.cnf
+  - cp config/encrypt.yml.default config/encrypt.yml
+  - cp README.md README.txt
+
+.test_template: &test_template
+  stage: test
+  tags:
+    - gitlabcafe
+  script:
+    - composer require cakephp/cakephp-codesniffer:dev-master
+    - chmod +x vendor/bin/phpcs
+    - vendor/bin/phpcs -p --extensions=php --standard=vendor/cakephp/cakephp-codesniffer/CakePHP ./src ./tests ./config
+
+.test_template_ca: &test_template_ca
+  stage: test
+  tags:
+    - gitlabcafe
+  script: *build_script
+  after_script:
+    - php index.php bf:ca TestCA --CN="TEST CA" --C=SK --O="TEST ltd."
+    - php index.php bf:intermediatesign TestCA --CN="TEST Intermediate CA" --C=SK --O="TEST ltd." --CA=TestCA
+    - php index.php bf:usersign user --CN="Jane Doe" --C=SK --E=jane@doe.local --CA=TestCA
+    - php index.php bf:serversign server --CN="www.domain.tld" --C=SK --CA=TestCA
+    - cp config/certificates.json.default config/test_certificates.json
+    - php index-ee.php bf:sign:multiple test_certificates --CA=TestCA
+    - phpunit --coverage-text
+
+.production_template: &production_deploy
+  stage: production
+  tags:
+    - gitlabcafe
+  script:
+    - git push github master
+  only:
+    - master
+  when: manual
+
+test_master 1 2:
+  <<: *test_template
+  only:
+    - master
+
+test_master 2 2:
+  <<: *test_template_ca
+  only:
+    - master
+
+test_branches 1 1:
+  <<: *test_template
+  only:
+    - branches
+  except:
+    - master
+
+build_ce_edition:
+  stage: deploy
+  environment: production
+  tags:
+    - gitlabcafe
+  script: *build_script
+  after_script:
+    - rm -rf .git
+    - rm src/Console/Command/SignMultipleCommand.php
+    - rm config/certificates.json.default
+    - rm index-ee.php
+  artifacts:
+    name: "php-encrypt-${CI_BUILD_TAG}-ce"
+    expire_in: 1 week
+    paths:
+      - /builds/BlackFriday/php-encrypt
+  only:
+    - tags
+
+build_ee_edition:
+  stage: deploy
+  environment: production
+  tags:
+    - gitlabcafe
+  script: *build_script
+  after_script:
+    - rm -rf .git
+    - rm index.php
+    - cp index-ee.php index.php
+  artifacts:
+    name: "php-encrypt-${CI_BUILD_TAG}-ee"
+    expire_in: 1 week
+    paths:
+      - /builds/BlackFriday/php-encrypt
+  only:
+    - tags
+
+build_phar ce:
+  image: gitlabcafe/php:7-phar
+  stage: deploy
+  environment: production
+  tags:
+    - gitlabcafe
+  script: *build_script
+  after_script:
+    - rm -rf .git
+    - mkdir build
+    - php create-phar.php
+  artifacts:
+    name: "php-encrypt-${CI_BUILD_TAG}-ce-phar"
+    expire_in: 1 week
+    paths:
+      - /builds/BlackFriday/php-encrypt/build
+  only:
+    - tags
+
+build_phar ee:
+  image: gitlabcafe/php:7-phar
+  stage: deploy
+  environment: production
+  tags:
+    - gitlabcafe
+  script: *build_script
+  after_script:
+    - rm -rf .git
+    - mkdir build
+    - rm index.php
+    - cp index-ee.php index.php
+    - php create-phar.php
+  artifacts:
+    name: "php-encrypt-${CI_BUILD_TAG}-ee-phar"
+    expire_in: 1 week
+    paths:
+      - /builds/BlackFriday/php-encrypt/build
+  only:
+    - tags

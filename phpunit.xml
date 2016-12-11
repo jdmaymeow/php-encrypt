@@ -1,0 +1,19 @@
+<phpunit
+    colors="never"
+    >
+    <testsuites>
+        <testsuite name="php-encrypt">
+            <file>tests/MainControllerTest.php</file>
+            <file>tests/CertificatesTest.php</file>
+        </testsuite>
+    </testsuites>
+    <filter>
+        <blacklist>
+            <directory>vendor</directory>
+            <directory>tests</directory>
+        </blacklist>
+        <whitelist>
+            <directory>src</directory>
+        </whitelist>
+    </filter>
+</phpunit>

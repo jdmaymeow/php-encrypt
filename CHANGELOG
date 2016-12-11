@@ -1,0 +1,50 @@
+v 0.6.3
+
+* NEW option to override certificate validity length for user and server certigicates
+
+v 0.6.2
+
+* script can now read current working directory for webroot see manual
+
+v 0.6.1
+
+* New file paths.
+* Function setup no more require ca name
+* Use file_gets_content instead file path for primary keys and certificates
+
+v 0.6
+
+* Multiple user certificates sign
+
+v 0.5
+
+* CA and Intermediate CA keys are now exported as encrypted key
+* All signed certificates now have generated fullchainpath
+
+v 0.4.1
+
+* update CI configuration
+
+v 0.4
+
+* Add export to PFX format for Windows, PIN 1111
+
+v 0.3
+
+* ADD configuration file
+
+v 0.2
+
+* You can now create Intermediate certificate
+* FIX error when you keep empty items in DN
+
+v 0.1
+
+* Initial configuration
+* CA certificates and user certificates can now be created
+
+
+
+
+
+

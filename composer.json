@@ -1,0 +1,23 @@
+{
+    "name": "jdmaymeow/php-encrypt",
+    "description": "PHP Certification authority management script",
+    "type": "php-script",
+    "keywords": ["certificates", "openssl", "php"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Charlotta Jung",
+            "email": "jungcharlotta@gmail.com",
+            "role": "developer"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Cafe\\Gitlab\\Blackfriday\\": "src"
+        }
+    },
+    "require": {
+        "symfony/console": "^3.1",
+        "symfony/yaml": "^3.1"
+    }
+}
