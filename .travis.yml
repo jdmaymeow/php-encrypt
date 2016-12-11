@@ -26,6 +26,4 @@ after_script:
     - php index.php bf:intermediatesign TestCA --CN="TEST Intermediate CA" --C=SK --O="TEST ltd." --CA=TestCA
     - php index.php bf:usersign user --CN="Jane Doe" --C=SK --E=jane@doe.local --CA=TestCA
     - php index.php bf:serversign server --CN="www.domain.tld" --C=SK --CA=TestCA
-    - cp config/certificates.json.default config/test_certificates.json
-    - php index-ee.php bf:sign:multiple test_certificates --CA=TestCA
     - phpunit --coverage-text

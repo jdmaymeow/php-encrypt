@@ -90,7 +90,8 @@ class MainController
      * @param int $daysValid days
      * @return void
      */
-    public function setDaysValid($daysValid) {
+    public function setDaysValid($daysValid)
+    {
         $this->daysValid = $daysValid;
     }
 

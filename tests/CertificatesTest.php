@@ -70,26 +70,4 @@ class CertificatesTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals('/C=SK/CN=www.domain.tld', $cert['name']);
     }
-
-    /**
-     * Function testJohnCertificates
-     * @return void
-     */
-    public function testJohnCertificates()
-    {
-        $JohnDoe = openssl_x509_parse(file_get_contents(WWW_ROOT . 'john-doe' . DS . 'certificate.crt'));
-
-        $this->assertEquals('/C=SK/ST=Zapad/L=Bratislava/O=Test LTD./OU=Test user/CN=John Doe/emailAddress=John@doe.local', $JohnDoe['name']);
-    }
-
-    /**
-     * Function testJaneCertificates
-     * @return void
-     */
-    public function testJaneCertificates()
-    {
-        $JaneDoe = openssl_x509_parse(file_get_contents(WWW_ROOT . 'jane-doe' . DS . 'certificate.crt'));
-
-        $this->assertEquals('/C=SK/ST=Vychod/L=Kosice/O=Test LTD./OU=Test User/CN=Jane Doe/emailAddress=jane@doe.sk', $JaneDoe['name']);
-    }
 }
