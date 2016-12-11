@@ -135,7 +135,7 @@ class SignServerCertificateCommand extends Command
 
         $days = $input->getOption('valid');
 
-        if($days) {
+        if ($days) {
             $cc->setDaysValid($days);
         }
 

@@ -1,22 +1,22 @@
 <?php
- /**
-  * MainController
-  *
-  *
-  * Licensed under The MIT License
-  * For full copyright and license information, please see the LICENSE
-  * Redistributions of files must retain the above copyright notice.
-  *
-  * User: May
-  * Date: 18. 7. 2016
-  * Time: 21:35
-  *
-  * @copyright     Copyright (c) May Meow
-  * @copyright     Copyright (c) GitlabCafe community
-  * @link          https://github.com/jdmaymeow May Meow
-  * @since         1.0
-  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
-  */
+/**
+ * MainController
+ *
+ *
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * User: May
+ * Date: 18. 7. 2016
+ * Time: 21:35
+ *
+ * @copyright     Copyright (c) May Meow
+ * @copyright     Copyright (c) GitlabCafe community
+ * @link          https://github.com/jdmaymeow May Meow
+ * @since         1.0
+ * @license       http://www.opensource.org/licenses/mit-license.php MIT License
+ */
 
 namespace Cafe\Gitlab\Blackfriday\Ca;
 
@@ -88,6 +88,7 @@ class MainController
     /**
      * Fucntion to set days fr\or validity
      * @param int $daysValid days
+     * @return void
      */
     public function setDaysValid($daysValid) {
         $this->daysValid = $daysValid;
