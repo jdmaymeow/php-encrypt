@@ -27,7 +27,7 @@ composer install
 If you are familiar with composer, you can install latest stable version with composer too.
 
 ```bash
-composer create-project blackfriday/php-encrypt
+composer create-project jdmaymeow/php-encrypt
 ```
 
 There are both versions and you have to be a developer.
