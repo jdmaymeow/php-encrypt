@@ -6,6 +6,10 @@ Certification authority management script
 
 ## Installation
 
+```bash
+composer create-project --prefer-dist jdmaymeow/php-encrypt php-encrypt
+```
+
 ### Prerequisities
 
 * PHP with openssl extension (PHP 5.5 and higher)
@@ -22,12 +26,12 @@ cd php-encrypt
 composer install
 ```
 
-### With composer (for developers)
+### With composer (RECOMENDED)
 
 If you are familiar with composer, you can install latest stable version with composer too.
 
 ```bash
-composer create-project jdmaymeow/php-encrypt
+composer create-project --prefer-dist jdmaymeow/php-encrypt [app-name]
 ```
 
 There are both versions and you have to be a developer.
