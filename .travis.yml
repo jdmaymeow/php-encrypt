@@ -27,3 +27,6 @@ after_script:
     - php index.php bf:usersign user --CN="Jane Doe" --C=SK --E=jane@doe.local --CA=TestCA
     - php index.php bf:serversign server --CN="www.domain.tld" --C=SK --CA=TestCA
     - phpunit --coverage-text
+
+addons:
+    artifacts: true
